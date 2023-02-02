@@ -1,21 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
 import time
-import os
-import glob
 
 print('Put some skill that you are not familiar with')
 unfamiliar_skill = input('>')
 print(f'Filtering out {unfamiliar_skill}')
 
-dir = '.\ScrapeTimesJobs\Posts'
 
 def find_jobs():
     html_text = requests.get('https://www.timesjobs.com/candidate/job-search.html?searchType=personalizedSearch&from=submit&txtKeywords=python&txtLocation=').text
     soup = BeautifulSoup(html_text, 'lxml')
     jobs = soup.find_all('li', class_ = 'clearfix job-bx wht-shd-bx')
-    for f in os.scandir(dir):
-        os.remove(file.path)
+
     for index, job in enumerate(jobs):
         published_date = job.find('span', class_ = 'sim-posted').span.text
         if 'few' in published_date:
